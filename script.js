@@ -5,24 +5,36 @@ const Player = (name, sign, currentPlayer, isWinner) => {
     }
 }
 
+const Bot = (name, sign, currentPlayer, isWinner) => {
+    return {
+         name, sign, currentPlayer, isWinner
+    }
+}
+
+
+const easyBotAI = () => {
+    console.log('I AM TERMINATOR')
+} 
+
 const gameBoard = (() => {
     const game = new Array(9).fill(null);
-    const playerX = Player('Weibo', 'X', false, 0);
-    const playerO = Player('Phil Knight', 'O', false, 0);
+    const player1Score = document.getElementById('player1Score');
+    const player2Score = document.getElementById('player2Score');
+    const playerX = Player('Weibo', 'X', true, 0);
+    const playerO = Bot('Computer', 'O', false, 0);
     const totalX = [];
     const totalO = [];
-    let gameIsOver = false;
-    let round = 1;
+    let roundIsOver = false;
+    let roundNumber = 1;
+
     
     const playRound = (e) => {
-        setField(e.dataset.index, currentPlayer().sign);
-        displayController.showField(e, currentPlayer().sign);
+        setField(e.dataset.index, theCurrentPlayer().sign);
         checkWinner()
-        if(gameIsOver === false) {
-            switchPlayer();
-            displayController.highlightCurrentPlayer();
-        }
+        checkStalemate();
+        displayController.showField(e, theCurrentPlayer().sign);
     }
+
 
     const setField = (index, sign) => {
         if(index > game.length) {return};
@@ -32,7 +44,7 @@ const gameBoard = (() => {
     }
 
     const switchPlayer = () => {
-        if(currentPlayer() === playerX) {
+        if(theCurrentPlayer() === playerX) {
             playerX.currentPlayer = false;
             playerO.currentPlayer = true;
         } else {
@@ -41,7 +53,7 @@ const gameBoard = (() => {
         }
     }
 
-    const currentPlayer = () => {
+    const theCurrentPlayer = () => {
         if(playerX.currentPlayer === true) {
             
             return playerX;
@@ -50,12 +62,6 @@ const gameBoard = (() => {
         }
     }
 
-    const checkIfEmpty = (() => {
-        if(game.every(el => el === null)) {
-            playerX.currentPlayer = true; 
-            playerO.currentPlayer = false;
-        }
-    })()
 
     const checkWinner = () => {
 
@@ -69,7 +75,6 @@ const gameBoard = (() => {
             [0, 4, 8],
             [2, 4, 6]];
      
-        console.log(totalX, totalO)
  
 
         winningMoves.forEach(el => {
@@ -79,38 +84,117 @@ const gameBoard = (() => {
                 if(totalX.includes(num)) {
                     countX++
                     if(countX === 3) {
-                        gameOver(playerX);
+                        roundOver(playerX);
 
                     }
                 }
                 if(totalO.includes(num)) {
                     countO++
                     if(countO === 3) {
-                        gameOver(playerO);
+                        roundOver(playerO);
                     }
                 }
             })
         });
      
-
+    
     }
   
-    const gameOver = (winner) => {
-        gameIsOver = true
-        console.log('----------------GAME OVER----------------');
-        winner.isWinner++;
-        displayController.display.textContent = winner.name + ' has won the game!';
-        displayController.gridContainer.removeEventListener('click', displayController.enableField);
-        resetGame();
+    const checkStalemate = () => {
+        if(!game.some(el => el === null)) {
+            roundOver(false);
+        }
+    }
+    const roundOver = (winner) => {
+        roundIsOver = true;
+
+        displayController.DOMplayer1.style.backgroundColor = '';
+        displayController.DOMplayer2.style.backgroundColor = '';
+        
+        if(winner !== false) {
+            console.log('----------------GAME OVER----------------');
+            winner.isWinner++;
+            displayController.display.textContent = winner.name + ' has won the round!';
+        } else {
+            console.log('----------------STALEMATE----------------');
+            displayController.display.textContent = `There was no winner this round`;
+        }
+
+        player1Score.textContent = playerX.isWinner;
+        player2Score.textContent = playerO.isWinner;
+        if(playerX.isWinner === 3 || playerO.isWinner === 3) {
+            gameOver();
+        } 
+
+
+
+
    
     }
 
-    const resetGame = () => {
-        displayController.resetDisplay();
- 
+    const gameOver = () => {
+        newGame.style.display = 'block'
+
+        if(Number(playerX.isWinner) > Number(playerO.isWinner)) {
+            displayController.display.textContent = playerX.name + ' is the winner!';
+        } else {
+            displayController.display.textContent = playerO.name + ' is the winner!';
+        }
+        displayController.gridContainer.removeEventListener('click',displayController.enableField);    
+
+
     }
-    
-    return {game, playRound, checkWinner, currentPlayer, round, playerX, switchPlayer,playerO}
+
+    const displayWinner = () => {
+
+    }
+
+    const getRoundResult = () => {
+        return roundIsOver;
+    }
+
+    const getRoundNumber = () => {
+        return roundNumber;
+    }
+
+    const incrementRound = () => {
+        roundNumber++;
+        return roundNumber;
+    }
+    const resetRound = (e) => {
+        for(let i = 0; i < game.length; i++) {
+            game[i] = null;
+        }
+        totalO.length = 0;
+        totalX.length = 0;
+        roundIsOver = false;
+        if(e.target === displayController.newGame) {
+            resetRoundNumber();
+            displayController.gridContainer.addEventListener('click', displayController.enableField);
+            playerX.currentPlayer = true;
+            playerO.currentPlayer = false;
+            playerX.isWinner = 0;
+            playerO.isWinner = 0;
+            displayController.highlightCurrentPlayer();
+            player1Score.textContent = playerX.isWinner;
+            player2Score.textContent = playerO.isWinner;
+            displayController.newGame.style.display = 'none'
+
+        } else {
+            playerX.currentPlayer = true;
+            playerO.currentPlayer = false;
+            displayController.highlightCurrentPlayer();
+            incrementRound();
+        }
+    }
+
+    const resetRoundNumber = () => {
+        return roundNumber = 1;
+    }
+
+
+
+    return {game, playRound, getRoundNumber, player1Score, player2Score, getRoundResult, incrementRound, checkWinner, theCurrentPlayer, resetRound, playerX, switchPlayer,playerO}
 
     
 })();
@@ -119,46 +203,68 @@ const displayController = (() => {
     const gridContainer = document.querySelector('.gridContainer');
     const DOMplayer1 = document.getElementById('player1');
     const DOMplayer2 = document.getElementById('player2');
-    const display = document.querySelector('.display')
+    const display = document.querySelector('.display');
+    const allFields = document.querySelectorAll('.field');
+    const roundTextDisplay = document.querySelector('.round');
+    const newGame = document.getElementById('newGame');
 
+
+    
+    const enableField = (e) => {
+        if(e.target === gridContainer) return;
+        if(gameBoard.getRoundResult() === true) {
+            resetDisplay(e);
+            return;
+        }
+
+        gameBoard.playRound(e.target);
+    }
+
+    const resetDisplay = (e) => {
+        allFields.forEach(el => el.textContent = '');
+        display.textContent = ''
+        gameBoard.resetRound(e);
+        roundTextDisplay.textContent = `ROUND: ${gameBoard.getRoundNumber()}`
+
+
+    }
+
+    
     const initalization = (() => {
-        display.textContent = `It is ${gameBoard.playerX.name}'s turn!`
+        gridContainer.addEventListener('click', enableField);
+        newGame.addEventListener('click', enableField)
+        gameBoard.player1Score.textContent = gameBoard.playerX.isWinner;
+        gameBoard.player2Score.textContent = gameBoard.playerO.isWinner;
         DOMplayer1.textContent = gameBoard.playerX.name;
         DOMplayer1.style.backgroundColor = 'pink';
         DOMplayer2.textContent = gameBoard.playerO.name;
     })()
-   
-    const enableField = (e) => {
-        if(e.target === gridContainer) return;
-        gameBoard.playRound(e.target);
-    }
-
-    gridContainer.addEventListener('click', enableField)
 
 
-    const highlightCurrentPlayer = (e) => {
-        display.textContent = `It is ${gameBoard.currentPlayer().name}'s turn!`
-        if(gameBoard.currentPlayer().sign === 'X') {
+    const highlightCurrentPlayer = () => {
+        if(gameBoard.theCurrentPlayer().sign === 'X') {
             DOMplayer1.style.backgroundColor = 'pink';
             DOMplayer2.style.backgroundColor = '';
         } else {
-            console.log(gameBoard.currentPlayer().name)
             DOMplayer2.style.backgroundColor = 'pink';
             DOMplayer1.style.backgroundColor = '';
         }
  
     }
 
-    const resetDisplay = () => {
-        
-    }
-
+ 
     const showField = (e, sign) => {
         if(e.textContent !== '') return;
-            e.textContent = sign;
+        e.textContent = sign;
+
+        if(gameBoard.getRoundResult() !== true) {
+            gameBoard.switchPlayer();
+            displayController.highlightCurrentPlayer();
+        }
+ 
 
     }
-    return {showField, highlightCurrentPlayer, resetDisplay, gridContainer, DOMplayer1, display, enableField, DOMplayer2}
+    return {showField, highlightCurrentPlayer, newGame, resetDisplay, gridContainer, DOMplayer1, display, enableField, DOMplayer2}
 
 })()
 

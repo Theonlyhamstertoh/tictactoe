@@ -8,7 +8,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 <body>
-    <div class='display'></div>
+    <div class='playerContainer'>
+        
+        <div class='player' >
+            <span id='player1'></span>
+            <span id='player1Score'></span>
+        </div>
+        <div class='player' >
+            <span id='player2'></span>
+            <span id='player2Score'></span>
+        </div>
+    </div>
+
     <div class='gridContainer'>
         <div class='field' data-index='0'></div>
         <div class='field' data-index='1'></div>
@@ -21,10 +32,15 @@
         <div class='field' data-index='8'></div>
     </div>
 
-    <div class='playerContainer'>
-        <div class='player' id='player1'></div>
-        <div class='player' id='player2'></div>
+    <div class='showWinner'>
+        <div class='display'></div>
+        <input type='button' id='newGame' value='New Game'>
     </div>
+   
+    <div class='round'>ROUND: 1</div>
+
+    <input type='text' class='textBox' id='nameOfPlayer1' placeholder='player1'></div>
+    <input type='text' class='textBox' id='nameOfPlayer2' placeholder='player1'></div>
     <script src='script.js'></script>
 </body>
 </html>
