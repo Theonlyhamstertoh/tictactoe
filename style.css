@@ -44,6 +44,13 @@ footer {
     color: #58462e95;
 }
 
+.displayNone {
+    display: none;
+}
+
+.displayBlock {
+    display: block;
+}
 
 
 /*              CARDS            */
@@ -59,18 +66,17 @@ footer {
 .card {
     color: white;
     box-shadow: 0px 0px 10px 2px #dacfc152;
-
     width: 350px;
     border-radius: 30px 30px;
-    height: 500px;
+    height: 450px;
     user-select: none;
-
     overflow: hidden;
 
 }
 
 .cardTop {
     font-family: tropical-Asian;
+    margin: 0 20px;
     text-align: center;
     color: black;
     font-size: 60px;
@@ -90,19 +96,6 @@ footer {
     align-items: center;
 }
 
-.cardname > input[type='text'] {
-    margin: 0 5px;
-    font-size: 1.5em;
-    font-family: sans-serif;
-    padding: 0 10px;
-    background-color: transparent;
-    border: none;
-    font-style: italic;
-    border-bottom: rgba(0, 0, 0, 0.164) 2px solid ;
-    width: 350px;
-    outline: none;
-    height: 30px;
-}
 
 ::placeholder {
     font-style: italic;
@@ -110,7 +103,42 @@ footer {
 }
 
 .cardBottom {
-    background-color: cornflowerblue;
-    height: 75px;
+    height: 50px;
+    display: flex;
+    
+    
 
 }
+
+.playerOrBot {
+    font-family: tropical-Asian;
+    font-size: 2em;
+    color: black;
+    display: flex;
+    align-items: center;
+    width: 200px;
+    justify-content: center;
+    height: 50px;
+}
+
+.addBoxShadow {
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.233) ;
+}
+
+/* .userName {
+    margin: 0 5px;
+    font-family: sans-serif;
+    padding: 0 5px;
+    background-color: transparent;
+    border: none;
+    font-style: italic;
+    border-bottom: rgba(0, 0, 0, 0.164) 2px solid ;
+    width: 100px;
+    outline: none;
+    height: 20px;
+}
+
+
+.userName:focus {
+    border-bottom: rgba(122, 12, 12, 0.164) 2px solid ;
+} */

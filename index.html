@@ -11,38 +11,36 @@
     <main>
     <div class='titleScreen'>
         <div class='cardContainer'>
-            <div class='card'>
+
+            <div class='card'data-card='1'>
                 <div class='cardTop'>X</div>
                 <div class='cardAvatar'>
                     <iframe src="https://giphy.com/embed/l41lGnxllmN3YqOyI" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
                 </div>
-                <div class='cardname'>
-                    <input type='text' placeholder="player1">
-                </div>
+         
                 <div class='cardBottom'>
-                    <span>Player</span>
-                    <span>Bot</span>
+                    <span class='playerOrBot' id='player'>Player</span>
+                    <span class='playerOrBot' id='bot'>Bot</span>    
                 </div>
                 
             </div>
-            <div class='card'>
+
+            <div class='card'data-card='2'>
                 <div class='cardTop'>O</div>
                 <div class='cardAvatar'>
                     <iframe src="https://giphy.com/embed/xT77XUw1XMVGIxgove"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
                 </div>
-                <div class='cardname'>
-                    <input type='text' placeholder="player1">
-                </div>
-                <div class='cardBottom'>
-                    <span>Player</span>
-                    <span>Bot</span>
+           
+                <div class='cardBottom' >
+                    <span class='playerOrBot' id='player'>Player</span>
+                    <span class='playerOrBot' id='bot'>Bot</span>    
                 </div>
             </div>
       
         </div>
     </div>
-    <div class='loadingScreen'></div>
-    <div class='gameScreen'></div>
+    <!-- <div class='loadingScreen'>loadingScreen</div>
+    <div class='gameScreen'>gameScreen</div> -->
 
     </main>
     <footer>
@@ -54,4 +52,6 @@
     
     <script src='script.js'></script>
 </body>
-</html>
+</html>                    
+
+<!-- <span ><input class='userName' type='text' placeholder="player1"></span> -->
