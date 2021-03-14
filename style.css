@@ -1,64 +1,116 @@
 * {
-    font-family: 'Amiko', sans-serif;
-
-}
-.gridContainer {
-    display: grid;
-    grid-template-rows: repeat(3, 150px);
-    grid-template-columns: repeat(3, 150px);
-    justify-content: center;
+    margin: 0;
+    padding: 0%;
 }
 
-.display {
-    height: 30px;
-    font-family: 'Amiko';
-    font-size: 2em;
-    color: red;
-    text-align: center;
-    margin: 15px;
+@font-face {
+    font-family: tropical-Asian;
+    src: url(myFont/TropicalAsianDemoRegular-11V0.ttf)
 }
-.field {
-    display: flex;
-    border: 1px solid black;
-    align-items: center;
-    justify-content: center;
-    font-size: 5em;
-    user-select: none;
-}
-
-.playerContainer {
-    display: flex;
-    margin-top: 50px;
-    flex-direction: row;
-
-    justify-content: center;
-
-}
-.player {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 40px;
-    width: 200px;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #CCFFFF;
-}
-
-.round {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+a {
+    text-decoration: none;
     font-weight: 600;
-    height: 40px;
-    width: 200px;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #CCFFFF;
+    font-size: 1.1em;
+    color: #8f8f8f;
+
 }
 
-#newGame {
-    display: none;
+body {
+    display: grid;
+    height: 100vh;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 'header' 'main' 'footer'
+}
+header {
+    grid-area: header;
+    text-align: center;
+    font-family: tropical-Asian;
+    font-size: 7em;
 }
 
+main {
+    grid-area: main;
+}
+
+
+footer {
+    grid-area: footer;
+    text-align: center;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    margin-top: 65px;
+    padding: 6px;
+    box-shadow: 0px 0px 5px 1px #dacfc152;
+    color: #58462e95;
+}
+
+
+
+/*              CARDS            */
+.cardContainer {
+    grid-area: main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+    
+}
+
+.card {
+    color: white;
+    box-shadow: 0px 0px 10px 2px #dacfc152;
+
+    width: 350px;
+    border-radius: 30px 30px;
+    height: 500px;
+    user-select: none;
+
+    overflow: hidden;
+
+}
+
+.cardTop {
+    font-family: tropical-Asian;
+    text-align: center;
+    color: black;
+    font-size: 60px;
+    height: 50px;
+}
+
+.cardAvatar > iframe{
+    background-color:tomato;
+    height: 350px;
+    width: 350px;
+}
+
+.cardname {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardname > input[type='text'] {
+    margin: 0 5px;
+    font-size: 1.5em;
+    font-family: sans-serif;
+    padding: 0 10px;
+    background-color: transparent;
+    border: none;
+    font-style: italic;
+    border-bottom: rgba(0, 0, 0, 0.164) 2px solid ;
+    width: 350px;
+    outline: none;
+    height: 30px;
+}
+
+::placeholder {
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.233);
+}
+
+.cardBottom {
+    background-color: cornflowerblue;
+    height: 75px;
+
+}

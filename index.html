@@ -3,44 +3,55 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tic-tac-toe</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <title>TicTacToe</title>
 </head>
 <body>
-    <div class='playerContainer'>
-        
-        <div class='player' >
-            <span id='player1'></span>
-            <span id='player1Score'></span>
+    <header>Tic Tac Toe</header>
+    <main>
+    <div class='titleScreen'>
+        <div class='cardContainer'>
+            <div class='card'>
+                <div class='cardTop'>X</div>
+                <div class='cardAvatar'>
+                    <iframe src="https://giphy.com/embed/l41lGnxllmN3YqOyI" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                </div>
+                <div class='cardname'>
+                    <input type='text' placeholder="player1">
+                </div>
+                <div class='cardBottom'>
+                    <span>Player</span>
+                    <span>Bot</span>
+                </div>
+                
+            </div>
+            <div class='card'>
+                <div class='cardTop'>O</div>
+                <div class='cardAvatar'>
+                    <iframe src="https://giphy.com/embed/xT77XUw1XMVGIxgove"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                </div>
+                <div class='cardname'>
+                    <input type='text' placeholder="player1">
+                </div>
+                <div class='cardBottom'>
+                    <span>Player</span>
+                    <span>Bot</span>
+                </div>
+            </div>
+      
         </div>
-        <div class='player' >
-            <span id='player2'></span>
-            <span id='player2Score'></span>
-        </div>
     </div>
+    <div class='loadingScreen'></div>
+    <div class='gameScreen'></div>
 
-    <div class='gridContainer'>
-        <div class='field' data-index='0'></div>
-        <div class='field' data-index='1'></div>
-        <div class='field' data-index='2'></div>
-        <div class='field' data-index='3'></div>
-        <div class='field' data-index='4'></div>
-        <div class='field' data-index='5'></div>
-        <div class='field' data-index='6'></div>
-        <div class='field' data-index='7'></div>
-        <div class='field' data-index='8'></div>
-    </div>
-
-    <div class='showWinner'>
-        <div class='display'></div>
-        <input type='button' id='newGame' value='New Game'>
-    </div>
-   
-    <div class='round'>ROUND: 1</div>
-
-    <input type='text' class='textBox' id='nameOfPlayer1' placeholder='player1'></div>
-    <input type='text' class='textBox' id='nameOfPlayer2' placeholder='player1'></div>
+    </main>
+    <footer>
+        Made By
+        <a href="https://github.com/Theonlyhamstertoh" target="_blank">theonlyhamster</a>
+        <strong>|</strong>
+        <a href="https://github.com/Theonlyhamstertoh/tictactoe" target="_blank">Source</a>
+    </footer>
+    
     <script src='script.js'></script>
 </body>
 </html>
