@@ -1,6 +1,8 @@
 * {
     margin: 0;
     padding: 0%;
+    -webkit-tap-highlight-color: transparent;
+
 }
 
 @font-face {
@@ -9,10 +11,19 @@
 }
 a {
     text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1em;
+    font-weight: 100;
+    letter-spacing: 1.5px;
+    font-size: 1.2em;
     color: #8f8f8f;
+    padding: 10px;
 
+    transition-duration: 1.5s;
+    transition-property: font-size, color;
+}
+
+a:hover {
+    font-size: 2.5em;
+    color: #585656;
 }
 
 body {
@@ -21,13 +32,25 @@ body {
     grid-template-rows: auto 1fr auto;
     grid-template-areas: 'header' 'main' 'footer'
 }
+
 header {
+    text-align: center;
+    user-select: none;
+}
+
+.title {
     grid-area: header;
     text-align: center;
     font-family: tropical-Asian;
     font-size: 7em;
+    transition-property: color, letter-spacing;
+    transition-duration: 1s;
 }
 
+.title:hover {
+    color: red;
+    letter-spacing: 7px;
+}
 main {
     grid-area: main;
 }
@@ -36,8 +59,8 @@ main {
 footer {
     grid-area: footer;
     text-align: center;
-    font-size: 0.9em;
-    font-family: sans-serif;
+    font-size: 1.2em;
+    font-family: tropical-asian;
     margin-top: 65px;
     padding: 6px;
     box-shadow: 0px 0px 5px 1px #dacfc152;
@@ -64,27 +87,37 @@ footer {
 }
 
 .card {
+    position: relative;
     color: white;
-    box-shadow: 0px 0px 10px 2px #dacfc152;
+    box-shadow: 0px 0px 15px 3px #7a7a7a26;
     width: 350px;
     border-radius: 30px 30px;
     height: 450px;
     user-select: none;
     overflow: hidden;
-
+    transition-property: all;
+    transition-duration: 1s;
 }
-
+.card:hover {
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.144);
+}
 .cardTop {
-    font-family: tropical-Asian;
-    margin: 0 20px;
     text-align: center;
+    font-family: tropical-Asian;
     color: black;
     font-size: 60px;
     height: 50px;
+    border-radius: 30px 30px 0 0;
+    transition-property: all;
+    transition-duration: 1s;
 }
 
+.cardTop:hover {
+    color: rgb(230, 72, 72);
+
+
+}
 .cardAvatar > iframe{
-    background-color:tomato;
     height: 350px;
     width: 350px;
 }
@@ -119,26 +152,69 @@ footer {
     width: 200px;
     justify-content: center;
     height: 50px;
-}
+    transition-property: width, font-size, box-shadow;
+    transition-duration: 1s;
+    cursor: pointer;
 
-.addBoxShadow {
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.233) ;
-}
-
-/* .userName {
-    margin: 0 5px;
-    font-family: sans-serif;
-    padding: 0 5px;
-    background-color: transparent;
-    border: none;
-    font-style: italic;
-    border-bottom: rgba(0, 0, 0, 0.164) 2px solid ;
-    width: 100px;
-    outline: none;
-    height: 20px;
 }
 
 
-.userName:focus {
-    border-bottom: rgba(122, 12, 12, 0.164) 2px solid ;
-} */
+
+
+#player1 {
+    border-radius: 0 0 0 30px;
+}
+
+#player2 {
+    border-radius: 0 0 0 30px;
+
+}
+
+
+.keepTransition {
+    animation-name: keep;
+    animation-fill-mode: forwards;
+    animation-duration: .5s;
+}
+
+@keyframes keep{
+    from {
+        font-size: 55px;
+        color: rgb(230, 72, 72);
+    }
+    to {
+        font-size: 60px;
+       color: rgb(209, 16, 16);
+
+    }
+}
+
+.endTransition {
+    animation-name: end;
+    animation-fill-mode: forwards;
+    animation-duration: .3s;
+}
+@keyframes end {
+    from {
+        font-size: 60px;
+        color: rgb(160, 7, 7);
+    }
+    to {
+        font-size: 2em;
+        color: black;
+
+    }
+}
+
+.playerOrBot:hover {
+    font-size: 55px;
+    width: 300px;
+    box-shadow: 
+    inset 0 0 5px 2px rgba(0, 0, 0, 0.089),
+    0 0 10px 5px rgba(0, 0, 0, 0.233);
+    color: rgb(230, 72, 72);
+} 
+
+
+
+
