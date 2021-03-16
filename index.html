@@ -3,43 +3,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="titleScreen.css">
+    <link rel="stylesheet" href="loadingScreen.css">
     <title>TicTacToe</title>
 
 </head>
 <body>
     <header><span class='title'>Tic Tac Toe</span></header>
     <main>
-    <div class='titleScreen'>
-        <div class='cardContainer'>
+        <div class='titleScreen'>
+            <div class='cardContainer'>
 
-            <div class='card'data-card='1'>
-                <div class='cardTop'>X</div>
-                <div class='cardAvatar'>
-                    <iframe id='iframe1'src="https://giphy.com/embed/l41lGnxllmN3YqOyI" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                <div class='card'data-card='1'>
+                    <div class='cardTop'>X</div>
+                    <div class='cardAvatar'>
+                        <iframe id='iframe1'src="https://giphy.com/embed/l41lGnxllmN3YqOyI" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                    </div>
+            
+                    <div class='cardBottom'>
+                        <span class='playerOrBot player' id='player1'>Player</span>
+                        <span class='playerOrBot bot' id='bot1' >Bot</span>    
+                    </div>
+                    
                 </div>
-         
-                <div class='cardBottom'>
-                    <span class='playerOrBot player' id='player1'>Player</span>
-                    <span class='playerOrBot bot' id='bot1' >Bot</span>    
-                </div>
-                
-            </div>
 
-            <div class='card'data-card='2'>
-                <div class='cardTop'>O</div>
-                <div class='cardAvatar'>
-                    <iframe id='iframe2'src="https://giphy.com/embed/xT77XUw1XMVGIxgove"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                <div class='startContainer'>
+                    <span class='vs'>VS</span>
+                    <input type='button' class='startGame' value='Start Game'>
                 </div>
            
-                <div class='cardBottom' >
-                    <span class='playerOrBot player' id='player2'>Player</span>
-                    <span class='playerOrBot bot' id='bot2'>Bot</span>    
+
+                <div class='card'data-card='2'>
+                    <div class='cardTop'>O</div>
+                    <div class='cardAvatar'>
+                        <iframe id='iframe2'src="https://giphy.com/embed/xT77XUw1XMVGIxgove"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                    </div>
+            
+                    <div class='cardBottom' >
+                        <span class='playerOrBot player' id='player2'>Player</span>
+                        <span class='playerOrBot bot' id='bot2'>Bot</span>    
+                    </div>
                 </div>
+        
             </div>
-      
         </div>
-    </div>
     <!-- <div class='loadingScreen'>loadingScreen</div>
     <div class='gameScreen'>gameScreen</div> -->
 

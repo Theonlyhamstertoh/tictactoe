@@ -51,8 +51,12 @@ header {
     color: red;
     letter-spacing: 7px;
 }
+
 main {
     grid-area: main;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -82,9 +86,11 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 200px;
+    gap: 100px;
     
 }
+
+
 
 .card {
     position: relative;
@@ -97,6 +103,19 @@ footer {
     overflow: hidden;
     transition-property: all;
     transition-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-name: size;
+    animation-fill-mode: forwards;
+    animation-duration: 2s;
+}
+
+@keyframes size {
+    from{
+       transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
 }
 .card:hover {
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.144);
@@ -138,9 +157,6 @@ footer {
 .cardBottom {
     height: 50px;
     display: flex;
-    
-    
-
 }
 
 .playerOrBot {
@@ -156,6 +172,83 @@ footer {
     transition-duration: 1s;
     cursor: pointer;
 
+}
+
+
+.playerOrBot:hover {
+    font-size: 55px;
+    width: 300px;
+    box-shadow: 
+    inset 0 0 5px 2px rgba(0, 0, 0, 0.089),
+    0 0 10px 5px rgba(0, 0, 0, 0.233);
+    color: rgb(230, 72, 72);
+} 
+
+/* vs sign animation */
+.vs {
+    user-select: none;
+    font-family: tropical-asian;
+    font-weight: 500;
+    animation-name: vs;
+    animation-duration: 1s ;
+    animation-delay: 2s;
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+
+}
+
+@keyframes vs {
+    from {font-size: 0em}
+    to {font-size: 15em;}
+}
+
+.shrink {
+    animation-name: shrink;
+    animation-duration: 1s ;
+    animation-delay: 2s;
+
+ 
+}
+@keyframes shrink {
+    from {font-size: 15em}
+    to {font-size: 10em;}
+}
+
+.startGame {
+    display: none;
+    border: none;
+    font-family: tropical-asian;
+    background-color: transparent;
+    border-radius: 50px;
+    padding: 10px 20px;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.096);
+    animation-duration: 1s;
+    animation-fill-mode: forwards; 
+    animation-name: appearButton;
+    transition-duration: 1s;
+    transition-property: transform;
+}
+
+.startGame:hover {
+    transform: scale(1.4);
+}
+
+.startContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes appearButton {
+    from {
+        font-size: 0;
+    }
+    to {
+        font-size: 5em;
+    }
 }
 
 
@@ -189,11 +282,13 @@ footer {
     }
 }
 
+
 .endTransition {
     animation-name: end;
     animation-fill-mode: forwards;
     animation-duration: .3s;
 }
+
 @keyframes end {
     from {
         font-size: 60px;
@@ -205,16 +300,6 @@ footer {
 
     }
 }
-
-.playerOrBot:hover {
-    font-size: 55px;
-    width: 300px;
-    box-shadow: 
-    inset 0 0 5px 2px rgba(0, 0, 0, 0.089),
-    0 0 10px 5px rgba(0, 0, 0, 0.233);
-    color: rgb(230, 72, 72);
-} 
-
 
 
 
