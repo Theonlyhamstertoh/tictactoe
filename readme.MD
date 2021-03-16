@@ -3,4 +3,4 @@
 * Refactoring code 
 * transition animations
 * factory functions + modular functions
-* multi-page
+* multi-page 

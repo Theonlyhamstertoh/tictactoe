@@ -13,7 +13,7 @@ const titleScreen = (() => {
     for(let i = 0; i < 2; i++) {
         cardplayer[i].addEventListener('click', (e) => {
             e.target.classList.add('keepTransition');
-            chosenPlayer(i, e.target.classList[1]);
+            chosenPlayer(i, e.target.classList[1], e.target.textContent);
             changeGif(i)
             showStartbutton()
             if(cardbot[i].classList.contains('keepTransition')) {
@@ -25,8 +25,8 @@ const titleScreen = (() => {
     
         cardbot[i].addEventListener('click', (e) => {
             e.target.classList.add('keepTransition');
-            botType(e)
-            chosenPlayer(i, e.target.classList[1]);
+            botType(e, i)
+            chosenPlayer(i, e.target.classList[1], e.target.textContent);
             changeGif(i)
             showStartbutton()
             if(cardplayer[i].classList.contains('keepTransition')) {
@@ -37,28 +37,40 @@ const titleScreen = (() => {
         })
     }
 
-    const botType = (e) => {
+    const botType = (e, i) => {
+        if(e.target.textContent === 'Bot' ) {return e.target.textContent = 'Easy'}
+        if(chosenPlayer1 === 'player' || chosenPlayer2 === 'player' )  return
         switch(e.target.textContent) {
             case 'Easy':
-                e.target.textContent = 'Hard';
-                break;
+                return e.target.textContent = 'Hard';
             case 'Hard':
-                e.target.textContent = 'Impossible';
-                e.target.style.fontsize = '50px'
-                break;
+               return e.target.textContent = 'Impossible';
             case 'Impossible':
-                e.target.textContent = 'Easy';
-                break;
+               return e.target.textContent = 'Easy';
             default:
-                e.target.textContent = 'Easy';
-                break;
+               return e.target.textContent = 'Easy';
         }
+    
+   
 
     }
     let chosenPlayer1 = null;
     let chosenPlayer2 = null;
-    const chosenPlayer = (cardNumber, choice) =>{
-        return Number(cardNumber) === 0 ? chosenPlayer1 = choice : chosenPlayer2 = choice;
+    const chosenPlayer = (cardNumber, choice, botType) => {
+        if(choice === 'bot') {
+            if(cardNumber === 0) {
+                 return chosenPlayer1 = botType;
+            } else {
+                 return chosenPlayer2 = botType;
+            }
+        } 
+
+        if(Number(cardNumber) === 0) {
+            return chosenPlayer1 = choice 
+        } else {
+            return chosenPlayer2 = choice;
+        }
+            
     }
 
     const getPlayer = (number) => {

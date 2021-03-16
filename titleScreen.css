@@ -106,7 +106,7 @@ footer {
     animation-timing-function: ease-in-out;
     animation-name: size;
     animation-fill-mode: forwards;
-    animation-duration: 2s;
+    animation-duration: 1s;
 }
 
 @keyframes size {
@@ -191,9 +191,10 @@ footer {
     font-weight: 500;
     animation-name: vs;
     animation-duration: 1s ;
-    animation-delay: 2s;
+    animation-delay: 1s;
+    font-size: 0em;
     animation-fill-mode: both;
-    animation-iteration-count: 1;
+
 
 }
 
@@ -274,9 +275,11 @@ footer {
     from {
         font-size: 55px;
         color: rgb(230, 72, 72);
+        width: 300px;
     }
     to {
         font-size: 60px;
+        width: 350px;
        color: rgb(209, 16, 16);
 
     }
@@ -292,10 +295,12 @@ footer {
 @keyframes end {
     from {
         font-size: 60px;
+        width: 350px;
         color: rgb(160, 7, 7);
     }
     to {
         font-size: 2em;
+        width: 200px;
         color: black;
 
     }
