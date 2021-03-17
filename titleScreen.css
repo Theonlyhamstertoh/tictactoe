@@ -9,6 +9,12 @@
     font-family: tropical-Asian;
     src: url(myFont/TropicalAsianDemoRegular-11V0.ttf)
 }
+@font-face {
+    font-family: helloTropical;
+    src: url(myFont/HelloTropical.ttf);
+
+}
+
 a {
     text-decoration: none;
     font-weight: 100;
@@ -54,12 +60,14 @@ header {
 
 main {
     grid-area: main;
+}
+
+.titleScreen {
     display: flex;
+    margin-top: 25px;
     align-items: center;
     justify-content: center;
 }
-
-
 footer {
     grid-area: footer;
     text-align: center;
@@ -82,7 +90,6 @@ footer {
 
 /*              CARDS            */
 .cardContainer {
-    grid-area: main;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,7 +100,6 @@ footer {
 
 
 .card {
-    position: relative;
     color: white;
     box-shadow: 0px 0px 15px 3px #7a7a7a26;
     width: 350px;
@@ -176,7 +182,7 @@ footer {
 
 
 .playerOrBot:hover {
-    font-size: 55px;
+    font-size: 50px;
     width: 300px;
     box-shadow: 
     inset 0 0 5px 2px rgba(0, 0, 0, 0.089),
@@ -273,7 +279,7 @@ footer {
 
 @keyframes keep{
     from {
-        font-size: 55px;
+        font-size: 50px;
         color: rgb(230, 72, 72);
         width: 300px;
     }
@@ -307,4 +313,152 @@ footer {
 }
 
 
+
+
+/*          loading Screeen          */
+.loadingScreen {
+    font-family: tropical-asian;
+    font-size: 10em;
+}
+
+.contestant {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    font-size: 2em;
+    justify-content: center;
+    align-items: center;
+
+}
+.contestant1 {
+    transform: scale(0);
+}
+.contestantVS {
+    transform: scale(0);
+}
+.contestant2 {
+    transform: scale(0);
+} 
+
+.timeCounter {
+    transform: scale(0);
+}
+.countDown {
+    display: flex;
+    font-size: 1.2em;
+    justify-content: center;
+    align-items: center;
+}
+
+.addTropicalFont {
+    font-family: helloTropical;
+}
+.increaseFont {
+    animation-name: increaseFont;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes increaseFont {
+    0% {transform: scale(0);} 
+    75% {transform: scaleX(1.2);}
+    100% {transform: scale(1);}
+} 
+
+.fadeOut {
+    animation-name: fadeOut;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+    0% {transform: scale(1);}
+    50% {transform: scaleX(1.2);}
+    100% {transform: scale(0);} 
+}
+
+.quickIncrease {
+    animation-name: quickIn;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes quickIn {
+    0% {transform: scale(0);} 
+    75% {transform: scaleX(1);}
+    100% {transform: scale(1);}
+} 
+
+.quickFadeOut {
+    animation-name: quickOut;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes quickOut {
+    0% {transform: scale(1);}
+    50% {transform: scaleX(1.2);}
+    100% {transform: scale(0);} 
+}
+
+
+.
+/* 
+.contestant {
+    width: 1000px;
+    visibility: hidden;
+    font-size: 15em;
+    word-spacing: 20px;
+}
+
+.font {
+    font-family: tropical-asian;
+}
+
+.giantFont {
+    font-size: 100px;
+}
+
+.countDown {
+    text-align: center;
+    width: 1000vw; 
+    font-size: 7em;
+    font-family: helloTropical;
+}
+
+.showText {
+    animation-name: show;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.unshowText {
+    animation-name: unshow;
+    animation-duration: 1000ms;
+    animation-fill-mode: both;
+}
+
+@keyframes unshow {
+    from{visibility: visible; opacity: 1;}
+    to {visibility: hidden; opacity: 0;}
+}
+
+#firstText {
+    display: none;
+}
+.timeCounter {
+    display: none;
+}
+#startText {
+    display: none;
+}
+@keyframes show {
+    from{
+        font-size: 0;
+    } 
+    to {
+        visibility: visible;
+        font-size: 1em;
+    }
+} */
 
