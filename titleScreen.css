@@ -87,7 +87,6 @@ footer {
     display: block;
 }
 
-
 /*              CARDS            */
 .cardContainer {
     display: flex;
@@ -96,8 +95,6 @@ footer {
     gap: 100px;
     
 }
-
-
 
 .card {
     color: white;
@@ -115,14 +112,7 @@ footer {
     animation-duration: 1s;
 }
 
-@keyframes size {
-    from{
-       transform: scale(0);
-    }
-    to{
-        transform: scale(1);
-    }
-}
+
 .card:hover {
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.144);
 }
@@ -180,7 +170,6 @@ footer {
 
 }
 
-
 .playerOrBot:hover {
     font-size: 50px;
     width: 300px;
@@ -202,23 +191,6 @@ footer {
     animation-fill-mode: both;
 
 
-}
-
-@keyframes vs {
-    from {font-size: 0em}
-    to {font-size: 15em;}
-}
-
-.shrink {
-    animation-name: shrink;
-    animation-duration: 1s ;
-    animation-delay: 2s;
-
- 
-}
-@keyframes shrink {
-    from {font-size: 15em}
-    to {font-size: 10em;}
 }
 
 .startGame {
@@ -249,18 +221,6 @@ footer {
     justify-content: center;
 }
 
-@keyframes appearButton {
-    from {
-        font-size: 0;
-    }
-    to {
-        font-size: 5em;
-    }
-}
-
-
-
-
 #player1 {
     border-radius: 0 0 0 30px;
 }
@@ -270,6 +230,158 @@ footer {
 
 }
 
+/*          loading Screeen          */
+.loadingScreen {
+    font-family: tropical-asian;
+    font-size: 10em;
+    display: none;
+}
+
+.contestant {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    font-size: 2em;
+    justify-content: center;
+    align-items: center;
+
+}
+.contestant1 {
+    transform: scale(0);
+}
+.contestantVS {
+    transform: scale(0);
+}
+.contestant2 {
+    transform: scale(0);
+} 
+
+.timeCounter {
+    transform: scale(0);
+}
+.countDown {
+    display: flex;
+    font-size: 1.2em;
+    justify-content: center;
+    align-items: center;
+}
+
+.addTropicalFont {
+    font-family: helloTropical;
+}
+.increaseFont {
+    animation-name: increaseFont;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+
+
+/* GAME SCREEN */
+.gameScreen {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    height: 80vh;
+}
+
+.round {
+    margin-top: 25px;   
+}
+
+.boxShadowCSS {
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    font-family: tropical-asian;
+    font-size: 3em;
+    color: rgba(0, 0, 0, 0.657);
+    border-radius: 30px;
+    padding: 0 20px;
+    box-shadow: 0 0 20px 0.5px rgba(0, 0, 0, 0.048);
+    align-self: center;
+    gap: 20px;
+}
+.number {
+    font-family: helloTropical;
+}
+.boardWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameTop {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.thePlayersWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    gap: 25px;
+}
+.gameBoard {
+    display: grid;
+    justify-content: center;
+    grid-template-rows: repeat(3, 100px);
+    grid-template-columns: repeat(3, 100px);
+    gap: 12px;
+
+}
+
+.gameCards {
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    font-family: tropical-asian;
+    color: rgba(0, 0, 0, 0.657);
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+.gameCards:hover {
+    border-radius: 30px;
+    background-color: rgb(233, 233, 233);
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.096);
+}
+.returnToTitle {
+    border: none;
+    font-family: tropical-asian;
+    background-color: white;
+    border-radius: 50px;
+    padding: 10px 10px;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.096);
+    font-size: 1.6em;
+
+    transition-duration: 1s;
+    transition-property: font-size;
+    margin: 20px 0 0 20px;
+}
+
+.returnToTitle:hover {
+    font-size: 2em;
+}
+
+header {
+    display: none;
+}
+.titleScreen {
+    display: none;
+}
+
+
+/*          key frames          */
 
 .keepTransition {
     animation-name: keep;
@@ -312,54 +424,6 @@ footer {
     }
 }
 
-
-
-
-/*          loading Screeen          */
-.loadingScreen {
-    font-family: tropical-asian;
-    font-size: 10em;
-}
-
-.contestant {
-    display: flex;
-    flex-direction: row;
-    gap: 100px;
-    font-size: 2em;
-    justify-content: center;
-    align-items: center;
-
-}
-.contestant1 {
-    transform: scale(0);
-}
-.contestantVS {
-    transform: scale(0);
-}
-.contestant2 {
-    transform: scale(0);
-} 
-
-.timeCounter {
-    transform: scale(0);
-}
-.countDown {
-    display: flex;
-    font-size: 1.2em;
-    justify-content: center;
-    align-items: center;
-}
-
-.addTropicalFont {
-    font-family: helloTropical;
-}
-.increaseFont {
-    animation-name: increaseFont;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-}
-
-
 @keyframes increaseFont {
     0% {transform: scale(0);} 
     75% {transform: scaleX(1.2);}
@@ -401,64 +465,64 @@ footer {
     100% {transform: scale(0);} 
 }
 
-
-.
-/* 
-.contestant {
-    width: 1000px;
-    visibility: hidden;
-    font-size: 15em;
-    word-spacing: 20px;
+.animateMarker {
+    animation-name: animateMarker;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
 }
 
-.font {
-    font-family: tropical-asian;
+@keyframes animateMarker {
+    0% {font-size: 0;}
+    60% {font-size: 9em;}
+    100% {font-size: 7em;} 
 }
 
-.giantFont {
-    font-size: 100px;
+.bouncy {
+    animation-name: bouncy;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+@keyframes bouncy {
+    5% {transform: scale(0);} 
+    25% {transform: scale(3, 3)}
+    70% {transform: scale(1);}
+    20% {transform: translateY(30);}
+    100% {transform: translateY(0);}
+    100% {gap: 12px;}
 }
 
-.countDown {
-    text-align: center;
-    width: 1000vw; 
-    font-size: 7em;
-    font-family: helloTropical;
-}
 
-.showText {
-    animation-name: show;
-    animation-duration: 1s;
-    animation-fill-mode: both;
-}
-
-.unshowText {
-    animation-name: unshow;
-    animation-duration: 1000ms;
-    animation-fill-mode: both;
-}
-
-@keyframes unshow {
-    from{visibility: visible; opacity: 1;}
-    to {visibility: hidden; opacity: 0;}
-}
-
-#firstText {
-    display: none;
-}
-.timeCounter {
-    display: none;
-}
-#startText {
-    display: none;
-}
-@keyframes show {
-    from{
+@keyframes appearButton {
+    from {
         font-size: 0;
-    } 
-    to {
-        visibility: visible;
-        font-size: 1em;
     }
-} */
+    to {
+        font-size: 5em;
+    }
+}
 
+@keyframes vs {
+    from {font-size: 0em}
+    to {font-size: 15em;}
+}
+
+.shrink {
+    animation-name: shrink;
+    animation-duration: 1s ;
+    animation-delay: 2s;
+
+ 
+}
+@keyframes shrink {
+    from {font-size: 15em}
+    to {font-size: 10em;}
+}
+
+@keyframes size {
+    from{
+       transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
+}

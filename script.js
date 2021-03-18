@@ -144,6 +144,7 @@ const loadingScreen = (() => {
     const countDown = document.querySelector('.timeCounter')
 
     const beginAnimation = (player1, player2) => {
+        loadingDisplay.style.display = 'block'
         contestant1.textContent = player1;
         contestant2.textContent = player2;
         if(player1 !== 'player') {
@@ -163,7 +164,7 @@ const loadingScreen = (() => {
         window.setTimeout(() => theCountDown('Start Game'), 7000 )
         window.setTimeout(() => {contestant.classList.add('fadeOut');}, 7500);
         window.setTimeout(() => loadingDisplay.style.display = 'none', 8500)
-        window.setTimeout(() => , 8500)
+        window.setTimeout(() => displayController.showBoard(), 9000 )
         
 
     }
@@ -233,53 +234,41 @@ const gameBoard = (() => {
     }
 })()
 
-const displayController = () => {
+const displayController = (() => {
+    const gameBoard = document.querySelector('.gameBoard');
+    const allGameCards = document.querySelectorAll('.gameCards');
+    const roundContainer = document.querySelector('.round');
+    const roundNumber = document.querySelector('.number');
+    const score1 = document.querySelector('.score1');
+    const playerWrapper = document.querySelector('.thePlayersWrapper');
+    const score2 = document.querySelector('.score2');
+    const boardWrapper = document.querySelector('.boardWrapper');
+    const titleContainer = document.querySelector('.titleScreen');
 
-}
+    const showBoard = (() => {
+        
+        window.setTimeout(() => {
+            playerWrapper.classList.add('increaseFont')
+            roundContainer.classList.add('increaseFont');
+            allGameCards.forEach(el => {
+                el.style.borderRadius = '20px'
+                el.classList.add('bouncy');
+                el.style.backgroundColor = '#f5f5f5';
+        })}, 100);
+
+    })()
+
+    const setTheSign = (field) => {
+        if(field.target === gameBoard) return;
+
+        field.target.textContent = 'X';
+        field.target.classList.add('animateMarker')
+        
+    }
+
+    gameBoard.addEventListener('click', setTheSign);
 
 
-// loadingDisplay.style.display = 'block'
-// contestant1.classList.add('showText');
-// window.setTimeout(() => contestantVS.classList.add('showText'), 1000)
-// window.setTimeout(() => contestant2.classList.add('showText'), 2000)
-// window.setTimeout(() => {
-//     firstText.style.display = 'block';
-//     firstText.classList.add('showText');
-// }, 3000)
-// window.setTimeout(() => {
-//     firstText.classList.add('unshowText');
-//     firstText.classList.remove('showText');
-// }, 4000)
+    return {showBoard}
+})()
 
-// window.setTimeout(() => {
-//     firstText.style.display = 'none';
-//     countDown.style.display = 'block';
-// }, 5000)
-// window.setTimeout(() => timeCountDown(), 5000)
-// window.setTimeout(() => timeCountDown(), 6000)
-// window.setTimeout(() => timeCountDown(), 7000)
-// window.setTimeout(() => timeCountDown(), 8000)
-// window.setTimeout(() => {
-//     startText.style.display = 'block'
-//     startText.classList.add('showText');
-// }, 8000)
-
-// }
-
-// let count = 3;
-// const timeCountDown = () => {
-// if(count === 0) {
-//     countDown.style.display = 'none';
-// };
-// countDown.textContent = count--;
-// countDown.classList.add('showText');
-// window.setTimeout(() => {
-//     countDown.classList.add('unshowText');
-//     countDown.classList.remove('showText');
-// }, 500);
-// window.setTimeout(()=> countDown.classList.remove('unshowText'))
-// }
-// const addEffects = () => {
-// countDown.classList.add('unshowText');
-
-// }
