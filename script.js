@@ -157,39 +157,43 @@ const loadingScreen = (() => {
         contestant1.classList.add('increaseFont');
         window.setTimeout(() => {contestantVS.classList.add('increaseFont')}, 1000);
         window.setTimeout(() => {contestant2.classList.add('increaseFont')}, 2000);
-        window.setTimeout(() => theCountDown(), 3000)
-        window.setTimeout(() => theCountDown(3), 4000 )
-        window.setTimeout(() => theCountDown(2), 5000 )
-        window.setTimeout(() => theCountDown(1), 6000 )
-        window.setTimeout(() => theCountDown('Start Game'), 7000 )
-        window.setTimeout(() => {contestant.classList.add('fadeOut');}, 7500);
-        window.setTimeout(() => loadingDisplay.style.display = 'none', 8500)
-        window.setTimeout(() => displayController.showBoard(), 9000 )
+        window.setTimeout(() => theCountDown(), 3000);
+        window.setTimeout(() => theCountDown(3), 4000 );
+        window.setTimeout(() => theCountDown(2), 5000 );
+        window.setTimeout(() => theCountDown(1), 6000 );
+        window.setTimeout(() => theCountDown('Start Game'), 7000 );
+        window.setTimeout(() => {contestant.classList.add('fadeOut')}, 7500);
+        window.setTimeout(() => loadingDisplay.style.display = 'none', 8500);
+        window.setTimeout(() => {
+            gameBoard.updatePlayer(0, player1);    
+            gameBoard.updatePlayer(1, player2);    
+            displayController.showBoard();
+        }, 9000 )
         
 
     }
 
     const theCountDown = (count) => {
         if(count !== undefined) {
-            countDown.classList.add('addTropicalFont')
+            countDown.classList.add('addTropicalFont');
             if(typeof(count) === 'string' ) { 
-                countDown.classList.remove('addTropicalFont')
+                countDown.classList.remove('addTropicalFont');
                 countDown.style.fontSize = '1.5em';
-                countDown.style.textDecoration = 'underline'
+                countDown.style.textDecoration = 'underline';
             }   
             countDown.textContent = count;
         }
-        countDown.classList.add('quickIncrease')
-        countDown.classList.remove('quickFadeOut')
+        countDown.classList.add('quickIncrease');
+        countDown.classList.remove('quickFadeOut');
         window.setTimeout(() =>{ 
-            countDown.classList.remove('quickIncrease')
-            countDown.classList.add('quickFadeOut')
+            countDown.classList.remove('quickIncrease');
+            countDown.classList.add('quickFadeOut');
         }, 500)
     }
     return {beginAnimation}
 })()
 
-const Player = (sign, playerType) => {
+const Player = (sign, currentPlayer, playerType ) => {
     const getSign = () => {
         return sign;
     }
@@ -199,6 +203,13 @@ const Player = (sign, playerType) => {
         return roundWinCount;
     }
 
+    const getCurrent = () => {
+        return currentPlayer;
+    }
+
+    const updateCurrent = (isPlayerCurrent) => {
+        return currentPlayer = isPlayerCurrent;
+    }
     const returnType = () => {
         return playerType;
     }
@@ -209,66 +220,363 @@ const Player = (sign, playerType) => {
     const incrementWin = () => {
         return roundWinCount++;
     }
+
+   
     return {
         getSign,
         getWinCount,
         incrementWin,
         updateType,
-        returnType
+        returnType,
+        getCurrent,
+        updateCurrent
     }
 }
 const gameBoard = (() => {
-    const playerX = Player('X')
-    const playerO = Player('O')
+    const playerX = Player('X', false, 'player');
+    const playerO = Player('O', false, 'easy');
+    const gameArray = Array(9).fill(null);
+    let roundCount = 1;
+    const totalX = [];
+    const totalO = [];
+    let isItStalemate = null;
+    console.log(gameArray)
+
+    const getRoundCount = () => {
+        return roundCount;
+    }
+
+    const incrementRoundCount = () => {
+        return roundCount++;
+    }
 
     const updatePlayer = (number, type) => {
         return number === 0 ? playerX.updateType(type) : playerO.updateType(type)
     }
-
+    
     const getPlayer = (number) => {
         return number === 0 ? playerX : playerO;
     }
 
-    return { 
-        updatePlayer, getPlayer
+    const currentPlayer = () => {
+        return playerX.getCurrent() === true ? playerX : playerO;
     }
-})()
 
-const displayController = (() => {
-    const gameBoard = document.querySelector('.gameBoard');
-    const allGameCards = document.querySelectorAll('.gameCards');
-    const roundContainer = document.querySelector('.round');
-    const roundNumber = document.querySelector('.number');
-    const score1 = document.querySelector('.score1');
-    const playerWrapper = document.querySelector('.thePlayersWrapper');
-    const score2 = document.querySelector('.score2');
-    const boardWrapper = document.querySelector('.boardWrapper');
-    const titleContainer = document.querySelector('.titleScreen');
+    const determineCurrentPlayer = () => {
+        if(playerX.getCurrent() === false && playerO.getCurrent() === false) {
+            playerX.updateCurrent(true);
+            return playerX;
+        } 
+        if(playerX.getCurrent() === true) {
+            playerX.updateCurrent(false);
+            playerO.updateCurrent(true);
+            return playerO;  
+       } else if(playerO.getCurrent() === true) {
+           playerO.updateCurrent(false);
+           playerX.updateCurrent(true);
+           return playerX
+       }
+    }
 
-    const showBoard = (() => {
+    const playRound = (field) => {
+        if(setTheSign(field) === null) return
+        checkWinner();
+        if(isItStalemate !== false ) checkStalemate(); 
+        determineCurrentPlayer();
+        console.log(isItStalemate)
+        if(isItStalemate === null) displayController.highlightPlayer() 
         
-        window.setTimeout(() => {
-            playerWrapper.classList.add('increaseFont')
-            roundContainer.classList.add('increaseFont');
-            allGameCards.forEach(el => {
-                el.style.borderRadius = '20px'
-                el.classList.add('bouncy');
-                el.style.backgroundColor = '#f5f5f5';
-        })}, 100);
+    }
 
-    })()
+
 
     const setTheSign = (field) => {
-        if(field.target === gameBoard) return;
+        const board = document.querySelector('.gameBoard');
+        const gameIndex = field.target.dataset.index;
 
-        field.target.textContent = 'X';
+        if(field.target === board) return null;
+        if(gameArray[gameIndex] !== null) return null;
+
+        gameArray[gameIndex] = currentPlayer().getSign();
+        currentPlayer().getSign() === 'X' ? totalX.push(Number(gameIndex)) : totalO.push(Number(gameIndex)); 
+
+        field.target.textContent = currentPlayer().getSign();
         field.target.classList.add('animateMarker')
         
     }
 
-    gameBoard.addEventListener('click', setTheSign);
+    
+    const checkStalemate = () => {
+        if(!gameArray.some(el => el === null)) {
+            isItStalemate = true;
+            return roundOver(false);
+        }
+    }
+
+    const checkWinner = () => {
+        const winningMoves = 
+            [[0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]];
+        
+    
+
+        winningMoves.forEach(el => {
+            const countX = [];
+            const countO = [];
+            el.forEach(num => {
+                if(totalX.includes(num)) {
+                    countX.push(num)
+                    if(countX.length === 3) {
+                        isItStalemate = false;
+                        return roundOver(playerX, countX)
+
+                    }
+                }
+                if(totalO.includes(num)) {
+                    countO.push(num)
+                    if(countO.length === 3) {
+                        isItStalemate = false;
+                        return roundOver(playerO, countO)
+                    }
+                }
+            })
+        });
+
+        
+    
+    }
+
+    const roundOver = (winner, winMarks) => {
+        if(winner !== false) winner.incrementWin();
+        displayController.endRound(playerX.getWinCount(), playerO.getWinCount(), winner);
+        //check whether to highlight mark or green them out
+        winner === false ? displayController.yellowForStale() : displayController.greenTheMarks(winMarks);
+        
+        window.setTimeout(() => {
+            gameArray.fill(null);
+            totalX.length = 0;
+            totalO.length = 0;
+            displayController.clearBoardAndField()
+            isItStalemate = null;
+        }, 2000)
+        if(winner.getWinCount() === 3 && winner !== false) {
+            displayController.showTrophy(winner)
+            window.setTimeout(() => {
+                displayController.gameOver()
+            }, 3200)
+
+        } else {
+            incrementRoundCount();
+            window.setTimeout(() => {
+                displayController.startNewRound()
+            }, 3200)
+        }
+   
+   
+    }
+
+    return { 
+        updatePlayer, 
+        getPlayer, 
+        playRound,
+        currentPlayer,
+        determineCurrentPlayer,
+        gameArray,
+        getRoundCount,
+        incrementRoundCount
+    }
+
+    
+
+})()
+
+const displayController = (() => {
+    const gameScreen = document.querySelector('.gameScreen')
+    const board = document.querySelector('.gameBoard');
+    const allGameCards = document.querySelectorAll('.gameCards');
+    const roundContainer = document.querySelector('.round');
+    const roundNumber = document.querySelector('.roundNumber');
+    const playerWrapper = document.querySelector('.thePlayersWrapper');
+    const one = document.querySelector('.one');
+    const two = document.querySelector('.two');
+    const score1 = document.querySelector('.score1');
+    const score2 = document.querySelector('.score2');
+    const trophy1 = document.querySelector('.trophy1');
+    const trophy2 = document.querySelector('.trophy2');
+    const boardWrapper = document.querySelector('.boardWrapper');
+    const titleContainer = document.querySelector('.titleScreen');
+    const returnToTitle = document.querySelector('.returnToTitle');
+    const roundText = document.querySelector('.roundText')
+
+    const showBoard = () => {
+        gameScreen.style.display = 'block'
+        window.setTimeout(() => {
+            returnToTitle.classList.add('increaseFont')
+            allGameCards.forEach(el => {
+                el.classList.add('bouncy');
+                window.setTimeout(() => el.classList.remove('bouncy'), 1500)
+        })}, 100);
+        window.setTimeout(() => {
+            playerWrapper.classList.add('increaseFont')
+            roundContainer.classList.add('increaseFont');
+            gameBoard.determineCurrentPlayer();
+            highlightPlayer();
+            returnToTitle.addEventListener('click', returnToStart)
+            board.addEventListener('click', gameBoard.playRound);
+        }, 1500);
+        
+    }
+
+    const showTrophy = (winner) => {
+        if(winner.getSign() === 'X') {
+            trophy1.style.display = 'block';
+            trophy1.classList.add('bouncy')
+        } else {
+            trophy2.style.display = 'block';
+            trophy2.classList.add('bouncy')
+        }
+    }
+    const returnToStart = () => [
+        location.reload()
+    ]
+
+    const highlightPlayer = () => {
+        if(gameBoard.currentPlayer().getSign() === 'X') {
+            two.classList.remove('toColor')
+            two.classList.remove('highlight');
+            
+            one.classList.add('highlight');
+            one.classList.add('toColor')
+
+        } else {
+            one.classList.remove('toColor')
+            one.classList.remove('highlight');
+            
+            two.classList.add('toColor')
+            two.classList.add('highlight');
+        }
+    }
 
 
-    return {showBoard}
+    const endRound = (playerXScore, playerOScore, winner) => {
+        score1.textContent = playerXScore;
+        score2.textContent = playerOScore;
+        if(winner === false) return;
+        winner.getSign() === 'X' ? score1.classList.add('quickIncrease') : score2.classList.add('quickIncrease');
+
+        
+
+            
+        board.removeEventListener('click', gameBoard.playRound);
+    }
+
+    const clearBoardAndField = () => {
+        allGameCards.forEach(el => {
+            el.classList.add('fadeMarkersOut');
+            el.classList.remove('highlightWinMark');
+            el.classList.remove('stalemate')
+            el.classList.remove('animateMarker');
+            score1.classList.remove('quickIncrease');
+            score2.classList.remove('quickIncrease');
+            roundNumber.classList.remove('increaseFont');
+            roundText.textContent = 'Round'
+            roundText.classList.remove('increaseFont');
+            el.style = '';
+            window.setTimeout(() => {
+                el.classList.remove('fadeMarkersOut');
+                el.textContent = '';
+
+            }, 1000)
+        })
+    }
+
+    const greenTheMarks = (winMarks) => {
+   
+        allGameCards.forEach(el => {
+            if(winMarks.includes(Number(el.dataset.index))) {
+                el.classList.remove('animateMarker')
+                el.classList.add('highlightWinMark');
+            }
+        })
+    }
+
+    const yellowForStale = () => {
+        allGameCards.forEach(el => {
+            el.classList.remove('animateMarker')
+            el.classList.add('stalemate');
+        })
+    }
+
+
+    const startNewRound = () => {
+        roundNumber.textContent =  gameBoard.getRoundCount();
+        highlightPlayer();
+        roundNumber.classList.add('increaseFont');
+        board.addEventListener('click', gameBoard.playRound);
+
+    }
+
+    const gameOver = () => {
+        roundNumber.textContent = ''
+        roundText.textContent = 'Game Over';
+        roundText.classList.add('increaseFont')
+        window.setTimeout(() => {
+            roundText.classList.remove('increaseFont');
+        }, 1000)
+        window.setTimeout(() => {
+            roundContainer.addEventListener('click', newGame)
+            roundText.textContent = 'Play Again';
+            roundNumber.textContent = '?'
+            roundContainer.style.cursor = 'pointer';
+            roundText.classList.add('increaseFont');
+            roundNumber.classList.add('increaseFont');
+
+        }, 2000)
+    }
+
+    const newGame = () => {
+        trophy1.style.display = 'none';
+        trophy1.classList.remove('bouncy')
+        trophy2.style.display = 'none';
+        trophy2.classList.remove('bouncy')
+        clearBoardAndField();
+        score1.textContent = 0;
+        score2.textContent = 0;
+        score1.classList.add('quickIncrease')
+        score2.classList.add('quickIncrease')
+        board.addEventListener('click', gameBoard.playRound);
+
+        roundText.textContent = 'Round ';
+        roundNumber.textContent = '1';
+        roundNumber.classList.add('increaseFont');
+        roundText.classList.add('increaseFont');
+        roundContainer.removeEventListener('click', newGame);
+        roundContainer.style.cursor = 'default';
+
+        window.setTimeout(() => {
+            score1.classList.remove('quickIncrease')
+            score2.classList.remove('quickIncrease')
+    
+        }, 1000)
+
+
+    }
+    return {
+        showBoard,
+        highlightPlayer,
+        greenTheMarks,
+        clearBoardAndField,
+        yellowForStale,
+        startNewRound,
+        endRound,
+        gameOver,
+        showTrophy
+    }
 })()
 

@@ -67,6 +67,7 @@ main {
     margin-top: 25px;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 footer {
     grid-area: footer;
@@ -233,7 +234,8 @@ footer {
 /*          loading Screeen          */
 .loadingScreen {
     font-family: tropical-asian;
-    font-size: 10em;
+    overflow: hidden;
+    font-size: 7em;
     display: none;
 }
 
@@ -280,22 +282,35 @@ footer {
 /* GAME SCREEN */
 .gameScreen {
     position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 100vw;
     height: 80vh;
+    display: none;
 }
 
-.round {
-    margin-top: 25px;   
+.roundWrapper {
+    display: flex;
+    justify-content: center;
+}
+.round{
+    margin-top: 25px;
+    transform: scale(0);
+    width: 200px;
+    text-align: center;
+    background-color: white;
+    transition-property: all;
+    transition-duration: 1s;
+}
+.round:hover {
+    font-size: 2.5em;
 }
 
 .boxShadowCSS {
     user-select: none;
     display: flex;
     justify-content: center;
-    background-color: white;
     font-family: tropical-asian;
     font-size: 3em;
     color: rgba(0, 0, 0, 0.657);
@@ -305,7 +320,7 @@ footer {
     align-self: center;
     gap: 20px;
 }
-.number {
+.roundNumber {
     font-family: helloTropical;
 }
 .boardWrapper {
@@ -321,14 +336,18 @@ footer {
 }
 
 .thePlayersWrapper {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 70px;
     margin-bottom: 25px;
+    transform: scale(0);
     gap: 25px;
 }
 .gameBoard {
     display: grid;
+    position: relative;
     justify-content: center;
     grid-template-rows: repeat(3, 100px);
     grid-template-columns: repeat(3, 100px);
@@ -344,12 +363,17 @@ footer {
     background-color: white;
     font-family: tropical-asian;
     color: rgba(0, 0, 0, 0.657);
+    width: 100px;
+    height: 100px;
     transition-property: all;
     transition-duration: 200ms;
+    border-radius: 20px;
+    background-color: #f5f5f5;
 }
 
 .gameCards:hover {
-    border-radius: 30px;
+    border-radius: 20px;
+    transform: scale(1.05);
     background-color: rgb(233, 233, 233);
     box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.096);
 }
@@ -363,9 +387,9 @@ footer {
     cursor: pointer;
     box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.096);
     font-size: 1.6em;
-
     transition-duration: 1s;
     transition-property: font-size;
+    transform: scale(0);
     margin: 20px 0 0 20px;
 }
 
@@ -373,15 +397,131 @@ footer {
     font-size: 2em;
 }
 
-header {
-    display: none;
+.score1 {
+    font-family: helloTropical;
 }
-.titleScreen {
-    display: none;
+.score2 {
+    font-family: helloTropical;
 }
 
+.highlight {
+    transition-duration: 100ms;
+    transition-property: all;
+}
+
+.highlight:hover {
+    background-color: rgb(255, 172, 161);
+}
+
+.one {
+    position: relative;
+}
+.two {
+    position: relative;
+}
+.trophy1 {
+    position: absolute;
+    display: none;
+    bottom: 0;
+    left: -70px;
+    width: 70px;
+    transform: scale(0);
+
+}
+
+.trophy2 {
+    position: absolute;
+    right: -70px;
+    bottom: 0;
+    width: 70px;
+    transform: scale(0);
+}
+
+.highlightWinMark {
+    animation-fill-mode: forwards;
+    animation-duration: 2s;
+    animation-name: highlightWinMark;
+}
+
+@keyframes highlightWinMark {
+    from{
+        background-color: #f5f5f5;
+        font-size: 7em;
+    }
+    80% {
+    
+        background-color: rgb(128, 177, 128);
+        box-shadow: 0px 0px 20px 2px #c2c2c2;
+        font-size: 9em;
+    }
+    100% {
+        font-size: 7em;
+    }
+}
+.stalemate {
+    animation-fill-mode: forwards;
+    animation-duration: 2s;
+    animation-name: stalemate;
+}
+
+@keyframes stalemate {
+    from{
+        background-color: #f5f5f5;
+        font-size: 7em;
+    }
+    80% {
+    
+        background-color: rgba(250, 243, 144, 0.452);
+        box-shadow: 0px 0px 20px 1px #c2c2c257;
+        font-size: 7.6em;
+    }
+    100% {
+        font-size: 7em;
+    }
+}
+
+.fadeMarkersOut {
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
+    animation-name: fadeMarkersOut;
+}
+@keyframes fadeMarkersOut {
+    from {
+        font-size: 7em;
+    }
+    to {
+        font-size: 0;
+        background-color: #f5f5f5;
+        color: transparent;
+    }
+}
 
 /*          key frames          */
+.transitionScore {
+    animation-name: transitionScore;
+    animation-fill-mode: forwards;
+    animation-duration: .2s;
+}
+
+@keyframes transitionScore {
+    
+}
+
+.toColor {
+    animation-name: toColor;
+    animation-fill-mode: forwards;
+    animation-duration: .2s;
+}
+
+@keyframes toColor {
+    from {
+        background-color: white;
+    }
+    to {
+        background-color: rgb(255, 185, 176);
+        box-shadow: 0px 0px 20px 1px rgb(255, 185, 176);
+    }
+}
 
 .keepTransition {
     animation-name: keep;
@@ -484,11 +624,10 @@ header {
 }
 @keyframes bouncy {
     5% {transform: scale(0);} 
-    25% {transform: scale(3, 3)}
+    25% {transform: scale(2, 2)}
     70% {transform: scale(1);}
     20% {transform: translateY(30);}
     100% {transform: translateY(0);}
-    100% {gap: 12px;}
 }
 
 
