@@ -203,6 +203,9 @@ const Player = (sign, currentPlayer, playerType ) => {
         return roundWinCount;
     }
 
+    const resetWinCount = () => {
+        return roundWinCount = 0;
+    }
     const getCurrent = () => {
         return currentPlayer;
     }
@@ -212,6 +215,7 @@ const Player = (sign, currentPlayer, playerType ) => {
     }
     const returnType = () => {
         return playerType;
+        
     }
 
     const updateType = (type) => {
@@ -229,25 +233,50 @@ const Player = (sign, currentPlayer, playerType ) => {
         updateType,
         returnType,
         getCurrent,
-        updateCurrent
+        updateCurrent,
+        resetWinCount,
     }
 }
+
+const bots = (() => {
+    const easyBot = () => {
+        const possibleMoves = [];
+        gameBoard.gameArray.filter((el, i) => {
+            if(el === null) {
+                possibleMoves.push(i)
+            }
+        })
+        const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+        gameBoard.setSignForBot(randomMove);
+
+
+    } 
+
+    return {easyBot}
+})()
+
 const gameBoard = (() => {
+    const board = document.querySelector('.gameBoard');
     const playerX = Player('X', false, 'player');
-    const playerO = Player('O', false, 'easy');
+    const playerO = Player('O', false, 'Easy');
     const gameArray = Array(9).fill(null);
     let roundCount = 1;
     const totalX = [];
     const totalO = [];
     let isItStalemate = null;
-    console.log(gameArray)
-
+    
+    
+    
     const getRoundCount = () => {
         return roundCount;
     }
 
     const incrementRoundCount = () => {
         return roundCount++;
+    }
+
+    const resetRoundCount = () => {
+        return roundCount = 1;
     }
 
     const updatePlayer = (number, type) => {
@@ -271,27 +300,48 @@ const gameBoard = (() => {
             playerX.updateCurrent(false);
             playerO.updateCurrent(true);
             return playerO;  
-       } else if(playerO.getCurrent() === true) {
-           playerO.updateCurrent(false);
-           playerX.updateCurrent(true);
+        } else if(playerO.getCurrent() === true) {
+            playerO.updateCurrent(false);
+            playerX.updateCurrent(true);
            return playerX
        }
     }
 
     const playRound = (field) => {
-        if(setTheSign(field) === null) return
+        if(field === null) {
+            bots.easyBot();
+        } else {
+            if(setTheSign(field) === null) return
+        }
         checkWinner();
         if(isItStalemate !== false ) checkStalemate(); 
         determineCurrentPlayer();
-        console.log(isItStalemate)
-        if(isItStalemate === null) displayController.highlightPlayer() 
-        
+        isBotCurrentPlayer();
+        if(isItStalemate === null) displayController.highlightPlayer()     
     }
 
+    const isBotCurrentPlayer = () => {
+        if(currentPlayer().returnType() === 'Easy' && isItStalemate === null && gameArray.some(el => el === null)) {
+            board.removeEventListener('click', gameBoard.playRound);
+            window.setTimeout(() => playRound(null), 500)
+            if(playerX.returnType() !== 'player' && playerO.returnType() !== 'player') return;
+            window.setTimeout(() => board.addEventListener('click', gameBoard.playRound), 1000)
+        }
+    }
 
-
+   
+    
+    const setSignForBot = (randomMove) => {
+        if(randomMove === undefined) return;
+        const allGameCards = document.querySelectorAll('.gameCards');
+        allGameCards[randomMove].textContent = currentPlayer().getSign();
+        allGameCards[randomMove].classList.add('animateMarker')
+        gameArray[randomMove] = currentPlayer().getSign();
+        currentPlayer().getSign() === 'X' ? totalX.push(Number(randomMove)) : totalO.push(Number(randomMove)); 
+        
+    }
+    
     const setTheSign = (field) => {
-        const board = document.querySelector('.gameBoard');
         const gameIndex = field.target.dataset.index;
 
         if(field.target === board) return null;
@@ -304,7 +354,6 @@ const gameBoard = (() => {
         field.target.classList.add('animateMarker')
         
     }
-
     
     const checkStalemate = () => {
         if(!gameArray.some(el => el === null)) {
@@ -330,6 +379,7 @@ const gameBoard = (() => {
             const countX = [];
             const countO = [];
             el.forEach(num => {
+                if(isItStalemate === false) return;
                 if(totalX.includes(num)) {
                     countX.push(num)
                     if(countX.length === 3) {
@@ -357,40 +407,48 @@ const gameBoard = (() => {
         displayController.endRound(playerX.getWinCount(), playerO.getWinCount(), winner);
         //check whether to highlight mark or green them out
         winner === false ? displayController.yellowForStale() : displayController.greenTheMarks(winMarks);
-        
         window.setTimeout(() => {
+            
             gameArray.fill(null);
             totalX.length = 0;
             totalO.length = 0;
-            displayController.clearBoardAndField()
             isItStalemate = null;
+            displayController.clearBoardAndField()
         }, 2000)
-        if(winner.getWinCount() === 3 && winner !== false) {
+        
+         if(winner !== false && winner.getWinCount() === 5 ) {
+            resetRoundCount();
+            playerX.resetWinCount()
+            playerO.resetWinCount()
             displayController.showTrophy(winner)
             window.setTimeout(() => {
                 displayController.gameOver()
-            }, 3200)
+            }, 3100)
 
         } else {
             incrementRoundCount();
             window.setTimeout(() => {
                 displayController.startNewRound()
-            }, 3200)
+                isBotCurrentPlayer();
+            }, 3100)
         }
    
    
     }
 
-    return { 
+    return Object.freeze({ 
         updatePlayer, 
         getPlayer, 
         playRound,
+        getRoundCount,
         currentPlayer,
         determineCurrentPlayer,
+        isBotCurrentPlayer,
+        setSignForBot,
         gameArray,
         getRoundCount,
         incrementRoundCount
-    }
+    })
 
     
 
@@ -405,6 +463,8 @@ const displayController = (() => {
     const playerWrapper = document.querySelector('.thePlayersWrapper');
     const one = document.querySelector('.one');
     const two = document.querySelector('.two');
+    const name1 = document.querySelector('.name1');
+    const name2 = document.querySelector('.name2');
     const score1 = document.querySelector('.score1');
     const score2 = document.querySelector('.score2');
     const trophy1 = document.querySelector('.trophy1');
@@ -423,10 +483,13 @@ const displayController = (() => {
                 window.setTimeout(() => el.classList.remove('bouncy'), 1500)
         })}, 100);
         window.setTimeout(() => {
+            name1.textContent = gameBoard.getPlayer(0).returnType() + ' One'
+            name2.textContent = gameBoard.getPlayer(1).returnType() + ' Two'
             playerWrapper.classList.add('increaseFont')
             roundContainer.classList.add('increaseFont');
             gameBoard.determineCurrentPlayer();
             highlightPlayer();
+            gameBoard.isBotCurrentPlayer();
             returnToTitle.addEventListener('click', returnToStart)
             board.addEventListener('click', gameBoard.playRound);
         }, 1500);
@@ -442,9 +505,9 @@ const displayController = (() => {
             trophy2.classList.add('bouncy')
         }
     }
-    const returnToStart = () => [
+    const returnToStart = () => {
         location.reload()
-    ]
+    }
 
     const highlightPlayer = () => {
         if(gameBoard.currentPlayer().getSign() === 'X') {
@@ -465,6 +528,7 @@ const displayController = (() => {
 
 
     const endRound = (playerXScore, playerOScore, winner) => {
+        board.removeEventListener('click', gameBoard.playRound);
         score1.textContent = playerXScore;
         score2.textContent = playerOScore;
         if(winner === false) return;
@@ -473,7 +537,6 @@ const displayController = (() => {
         
 
             
-        board.removeEventListener('click', gameBoard.playRound);
     }
 
     const clearBoardAndField = () => {
@@ -515,14 +578,15 @@ const displayController = (() => {
 
 
     const startNewRound = () => {
+        board.addEventListener('click', gameBoard.playRound);
         roundNumber.textContent =  gameBoard.getRoundCount();
         highlightPlayer();
         roundNumber.classList.add('increaseFont');
-        board.addEventListener('click', gameBoard.playRound);
 
     }
 
     const gameOver = () => {
+
         roundNumber.textContent = ''
         roundText.textContent = 'Game Over';
         roundText.classList.add('increaseFont')
@@ -538,28 +602,42 @@ const displayController = (() => {
             roundNumber.classList.add('increaseFont');
 
         }, 2000)
+        window.setTimeout(() => {
+            roundNumber.classList.remove('increaseFont');
+            roundText.classList.remove('increaseFont');
+        }, 3000)
     }
 
     const newGame = () => {
+        gameBoard.determineCurrentPlayer();
+        clearBoardAndField();
+        
+        roundContainer.removeEventListener('click', newGame);
+        roundContainer.style.cursor = 'default';
+        
         trophy1.style.display = 'none';
         trophy1.classList.remove('bouncy')
         trophy2.style.display = 'none';
         trophy2.classList.remove('bouncy')
-        clearBoardAndField();
-        score1.textContent = 0;
-        score2.textContent = 0;
+        
+        score1.textContent = gameBoard.getPlayer(0).getWinCount();
+        score2.textContent = gameBoard.getPlayer(1).getWinCount();
         score1.classList.add('quickIncrease')
         score2.classList.add('quickIncrease')
-        board.addEventListener('click', gameBoard.playRound);
-
+        
         roundText.textContent = 'Round ';
-        roundNumber.textContent = '1';
+        roundNumber.textContent = gameBoard.getRoundCount();
         roundNumber.classList.add('increaseFont');
         roundText.classList.add('increaseFont');
-        roundContainer.removeEventListener('click', newGame);
-        roundContainer.style.cursor = 'default';
-
+        
+        
+        
+        
         window.setTimeout(() => {
+            gameBoard.isBotCurrentPlayer();
+            board.addEventListener('click', gameBoard.playRound);
+            roundNumber.classList.remove('increaseFont');
+            roundText.classList.remove('increaseFont');
             score1.classList.remove('quickIncrease')
             score2.classList.remove('quickIncrease')
     

@@ -8,3 +8,4 @@ Link: https://theonlyhamstertoh.github.io/tictactoe/
 * transition animations
 * factory functions + modular functions
 * multi-page 
+* Learned deeper responsive mobile design

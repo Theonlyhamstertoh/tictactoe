@@ -437,6 +437,9 @@ footer {
     transform: scale(0);
 }
 
+
+/*          key frames          */
+
 .highlightWinMark {
     animation-fill-mode: forwards;
     animation-duration: 2s;
@@ -485,6 +488,7 @@ footer {
     animation-duration: 1s;
     animation-name: fadeMarkersOut;
 }
+
 @keyframes fadeMarkersOut {
     from {
         font-size: 7em;
@@ -496,7 +500,6 @@ footer {
     }
 }
 
-/*          key frames          */
 .transitionScore {
     animation-name: transitionScore;
     animation-fill-mode: forwards;
