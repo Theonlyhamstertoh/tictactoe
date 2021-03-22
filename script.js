@@ -68,9 +68,9 @@ const titleScreen = (() => {
     const chosenPlayer = (cardNumber, choice, botType) => {
         if(choice === 'bot') {
             if(cardNumber === 0) {
-                 return chosenPlayer1 = botType;
+                 return chosenPlayer1 = botType +' bot';
             } else {
-                 return chosenPlayer2 = botType;
+                 return chosenPlayer2 = botType +' bot';
             }
         } 
 
@@ -239,7 +239,8 @@ const Player = (sign, currentPlayer, playerType ) => {
 }
 
 const bots = (() => {
-    const easyBot = () => {
+  
+    const availableMoves = () => {
         const possibleMoves = [];
         gameBoard.gameArray.filter((el, i) => {
             if(el === null) {
@@ -247,13 +248,16 @@ const bots = (() => {
             }
         })
         const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-        gameBoard.setSignForBot(randomMove);
-
-
+        return Object.freeze({possibleMoves, randomMove});
+    }
+    const easyBot = () => {
+        gameBoard.setSignForBot(availableMoves().randomMove);
     } 
 
     return {easyBot}
 })()
+
+
 
 const gameBoard = (() => {
     const board = document.querySelector('.gameBoard');
@@ -265,8 +269,7 @@ const gameBoard = (() => {
     const totalO = [];
     let isItStalemate = null;
     
-    
-    
+
     const getRoundCount = () => {
         return roundCount;
     }
@@ -283,10 +286,12 @@ const gameBoard = (() => {
         return number === 0 ? playerX.updateType(type) : playerO.updateType(type)
     }
     
+
     const getPlayer = (number) => {
         return number === 0 ? playerX : playerO;
     }
 
+    
     const currentPlayer = () => {
         return playerX.getCurrent() === true ? playerX : playerO;
     }
@@ -321,7 +326,7 @@ const gameBoard = (() => {
     }
 
     const isBotCurrentPlayer = () => {
-        if(currentPlayer().returnType() === 'Easy' && isItStalemate === null && gameArray.some(el => el === null)) {
+        if(currentPlayer().returnType() !== 'player' && isItStalemate === null && gameArray.some(el => el === null)) {
             board.removeEventListener('click', gameBoard.playRound);
             window.setTimeout(() => playRound(null), 500)
             if(playerX.returnType() !== 'player' && playerO.returnType() !== 'player') return;
@@ -338,6 +343,7 @@ const gameBoard = (() => {
         allGameCards[randomMove].classList.add('animateMarker')
         gameArray[randomMove] = currentPlayer().getSign();
         currentPlayer().getSign() === 'X' ? totalX.push(Number(randomMove)) : totalO.push(Number(randomMove)); 
+
         
     }
     
@@ -447,7 +453,9 @@ const gameBoard = (() => {
         setSignForBot,
         gameArray,
         getRoundCount,
-        incrementRoundCount
+        incrementRoundCount,
+        
+    
     })
 
     
@@ -476,12 +484,11 @@ const displayController = (() => {
 
     const showBoard = () => {
         gameScreen.style.display = 'block'
-        window.setTimeout(() => {
-            returnToTitle.classList.add('increaseFont')
-            allGameCards.forEach(el => {
-                el.classList.add('bouncy');
-                window.setTimeout(() => el.classList.remove('bouncy'), 1500)
-        })}, 100);
+        allGameCards.forEach(el => {
+            el.classList.add('bouncy');
+            window.setTimeout(() => el.classList.remove('bouncy'), 1500)
+        })
+        returnToTitle.classList.add('increaseFont')
         window.setTimeout(() => {
             name1.textContent = gameBoard.getPlayer(0).returnType() + ' One'
             name2.textContent = gameBoard.getPlayer(1).returnType() + ' Two'
@@ -489,9 +496,10 @@ const displayController = (() => {
             roundContainer.classList.add('increaseFont');
             gameBoard.determineCurrentPlayer();
             highlightPlayer();
-            gameBoard.isBotCurrentPlayer();
+            window.setTimeout(() => gameBoard.isBotCurrentPlayer(), 500)
             returnToTitle.addEventListener('click', returnToStart)
-            board.addEventListener('click', gameBoard.playRound);
+            board.addEventListener('click', gameBoard.playRound)
+           
         }, 1500);
         
     }

@@ -48,14 +48,14 @@ header {
     grid-area: header;
     text-align: center;
     font-family: tropical-Asian;
-    font-size: 7em;
+    font-size: 15vh;
     transition-property: color, letter-spacing;
     transition-duration: 1s;
 }
 
 .title:hover {
     color: red;
-    letter-spacing: 7px;
+    letter-spacing: 2px;
 }
 
 main {
@@ -93,13 +93,14 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 100px;
+    padding: 10px;
+    gap: 70px;
     
 }
 
 .card {
     color: white;
-    box-shadow: 0px 0px 15px 3px #7a7a7a26;
+    box-shadow: 0px 0px 10px 2px #7a7a7a26;
     width: 350px;
     border-radius: 30px 30px;
     height: 450px;
@@ -158,7 +159,7 @@ footer {
 
 .playerOrBot {
     font-family: tropical-Asian;
-    font-size: 2em;
+    font-size: 3vw;
     color: black;
     display: flex;
     align-items: center;
@@ -172,7 +173,7 @@ footer {
 }
 
 .playerOrBot:hover {
-    font-size: 50px;
+    font-size: 4.3vw;
     width: 300px;
     box-shadow: 
     inset 0 0 5px 2px rgba(0, 0, 0, 0.089),
@@ -235,15 +236,15 @@ footer {
 .loadingScreen {
     font-family: tropical-asian;
     overflow: hidden;
-    font-size: 7em;
+    font-size: 15vw;
     display: none;
 }
 
 .contestant {
     display: flex;
     flex-direction: row;
-    gap: 100px;
-    font-size: 2em;
+    gap: 10vw;
+    font-size: 20vw;
     justify-content: center;
     align-items: center;
 
@@ -286,7 +287,6 @@ footer {
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 80vh;
     display: none;
 }
 
@@ -349,10 +349,9 @@ footer {
     display: grid;
     position: relative;
     justify-content: center;
-    grid-template-rows: repeat(3, 100px);
-    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, minmax(75px, 100px));
+    grid-template-columns: repeat(3, minmax(75px, 100px));
     gap: 12px;
-
 }
 
 .gameCards {
@@ -363,8 +362,6 @@ footer {
     background-color: white;
     font-family: tropical-asian;
     color: rgba(0, 0, 0, 0.657);
-    width: 100px;
-    height: 100px;
     transition-property: all;
     transition-duration: 200ms;
     border-radius: 20px;
@@ -436,8 +433,80 @@ footer {
     width: 70px;
     transform: scale(0);
 }
+/* header {
+    display: none;
+} */
+
+/* .titleScreen {
+    display: none;
+} */
 
 
+/*          Media Queries       */
+ @media (max-width: 750px) {
+     .thePlayersWrapper {
+         flex-direction: column;
+         margin-top: 100px;
+         transition: all 1s linear;
+
+     }
+
+
+     .cardContainer {
+         flex-direction: column;
+         gap: 10px;
+         transition: all 1s linear;
+
+     }
+     .startGame {
+         font-size: 2px;
+         margin-bottom: 30px;
+         transition: all 1s linear;
+
+     }
+     .contestant {
+         flex-direction: column;
+         font-size: 20vh;
+         gap: 0;
+         transition: all 1s linear;
+
+     }
+
+
+ }
+@media(max-width: 1099px) {
+    .card {
+        width: 250px;
+        height: 350px;
+        transition: all 1s linear;
+
+    }
+    .cardAvatar > iframe{
+        width: 250px;
+        height: 250px;
+        transition: all 1s linear;
+    }
+
+    .cardContainer {
+        gap: 30px;
+        transition: all 1s linear;
+
+    }
+
+    .vs {
+        transform: scale(0.5);
+        transition: all 1s linear;
+
+    }
+}
+ @media (min-width: 1100px) {
+     .cardContainer {
+         flex-direction: row;
+
+     }
+
+
+ }
 /*          key frames          */
 
 .highlightWinMark {
@@ -622,11 +691,11 @@ footer {
 
 .bouncy {
     animation-name: bouncy;
-    animation-duration: 2s;
+    animation-duration: 1.4s;
     animation-fill-mode: forwards;
 }
 @keyframes bouncy {
-    5% {transform: scale(0);} 
+    0% {transform: scale(0);} 
     25% {transform: scale(2, 2)}
     70% {transform: scale(1);}
     20% {transform: translateY(30);}
@@ -639,13 +708,13 @@ footer {
         font-size: 0;
     }
     to {
-        font-size: 5em;
+        font-size: 7vh;
     }
 }
 
 @keyframes vs {
     from {font-size: 0em}
-    to {font-size: 15em;}
+    to {font-size: 30vh;}
 }
 
 .shrink {
@@ -656,8 +725,8 @@ footer {
  
 }
 @keyframes shrink {
-    from {font-size: 15em}
-    to {font-size: 10em;}
+    from {font-size: 30vh}
+    to {font-size: 20vh;}
 }
 
 @keyframes size {
