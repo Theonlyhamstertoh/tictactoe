@@ -422,7 +422,7 @@ const gameBoard = (() => {
             displayController.clearBoardAndField()
         }, 2000)
         
-         if(winner !== false && winner.getWinCount() === 5 ) {
+         if(winner !== false && winner.getWinCount() === 3 ) {
             resetRoundCount();
             playerX.resetWinCount()
             playerO.resetWinCount()

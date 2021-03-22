@@ -482,7 +482,7 @@ footer {
 
 
  }
-@media(min-width: 751px) {
+@media(min-width: 751px) and (max-width: 1099px) {
     .card {
         width: 250px;
         height: 350px;
