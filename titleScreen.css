@@ -48,7 +48,7 @@ header {
     grid-area: header;
     text-align: center;
     font-family: tropical-Asian;
-    font-size: 15vh;
+    font-size: 7em;
     transition-property: color, letter-spacing;
     transition-duration: 1s;
 }
@@ -159,7 +159,7 @@ footer {
 
 .playerOrBot {
     font-family: tropical-Asian;
-    font-size: 3vw;
+    font-size: 30px;
     color: black;
     display: flex;
     align-items: center;
@@ -173,7 +173,7 @@ footer {
 }
 
 .playerOrBot:hover {
-    font-size: 4.3vw;
+    font-size: 50px;
     width: 300px;
     box-shadow: 
     inset 0 0 5px 2px rgba(0, 0, 0, 0.089),
@@ -433,13 +433,6 @@ footer {
     width: 70px;
     transform: scale(0);
 }
-/* header {
-    display: none;
-} */
-
-/* .titleScreen {
-    display: none;
-} */
 
 
 /*          Media Queries       */
@@ -448,16 +441,31 @@ footer {
          flex-direction: column;
          margin-top: 100px;
          transition: all 1s linear;
-
      }
 
+     .title {
+         font-size: 25vw;
+     }
 
      .cardContainer {
          flex-direction: column;
-         gap: 10px;
+         gap: 30px;
          transition: all 1s linear;
 
      }
+
+     .card {
+        width: 300px;
+        height: 400px;
+        transition: all 1s linear;
+
+    }
+
+    .cardAvatar > iframe{
+        width: 300px;
+        height: 300px;
+        transition: all 1s linear;
+    }
      .startGame {
          font-size: 2px;
          margin-bottom: 30px;
@@ -474,7 +482,7 @@ footer {
 
 
  }
-@media(max-width: 1099px) {
+@media(min-width: 751px) {
     .card {
         width: 250px;
         height: 350px;
