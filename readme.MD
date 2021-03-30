@@ -2,7 +2,7 @@
 Link: https://theonlyhamstertoh.github.io/tictactoe/
 
 ## Gif ##
-![Alt Text](https://github.com/Theonlyhamstertoh/tictactoe/gif/websitegif.gif)
+![Alt Text](https://github.com/Theonlyhamstertoh/tictactoe/blob/main/gif/websitegif.gif)
 ## Skills Learned ##
 * The importance of pre-planning
 * Refactoring code 
