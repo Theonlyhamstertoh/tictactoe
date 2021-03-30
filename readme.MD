@@ -1,9 +1,8 @@
 ## LIVE LINK ##
 Link: https://theonlyhamstertoh.github.io/tictactoe/
-## IMAGES OF PROJECT ##
 
 ## Gif ##
-
+![Alt Text](https://github.com/Theonlyhamstertoh/tictactoe/gif/websitegif.gif)
 ## Skills Learned ##
 * The importance of pre-planning
 * Refactoring code 
